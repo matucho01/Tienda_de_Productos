@@ -1,4 +1,7 @@
 <?php
+// Mateo Pérez
+// GR2SW
+// 28-11-2022
 $preferences = false;
 $username = "";
 $password = "";
