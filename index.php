@@ -24,7 +24,7 @@ if(isset($_COOKIE["c_preferences"]) && $_COOKIE["c_preferences"] != ""){
                 Usuario*:<br>
                 <input type="text" name="username" value="<?php echo $username?>"/><br>
                 Password*:<br>
-                <input type="password" name="password" value="<?php echo $password?>"/><br>
+                <input type="password" name="password" minlength=8 value="<?php echo $password?>" required/><br>
                 <br>
                 <input type="checkbox" name="preferences" <?php echo ($preferences)?"checked":""; ?> >Recordarme
                 <br>
