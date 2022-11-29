@@ -27,9 +27,9 @@ if(isset($_POST["preferences"])) {
     if(isset($_COOKIE["c_preferences"])){
         setcookie("c_language", $language, time()+(60*60*24));
     }else{
+        $preferences = $_POST["preferences"];
         $username = $_POST["username"];
         $password = $_POST["password"];
-        $preferences = $_POST["preferences"];
         setcookie("c_username", $username, time()+(60*60*24));
         setcookie("c_password", $password, time()+(60*60*24));
         setcookie("c_preferences", $preferences, time()+(60*60*24));
