@@ -1,35 +1,47 @@
 <?php
 //var_dump($_POST);
+//$language = (isset($_COOKIE["c_language"]))?$_COOKIE["c_language"]:"spanish";
 session_start();
 if(isset($_POST["username"]) && isset($_POST["password"])){
     $_SESSION["s_username"] = $_POST["username"];
     $_SESSION["s_password"] = $_POST["password"];
-    $username = $_POST["username"];
-    $password = $_POST["password"];
-
-    $preferences = (isset($_POST["preferences"]))?$_POST["preferences"]:"";
-
-    if($preferences != "") {
-        setcookie("c_username", $username, time()+(60*60*24));
-        setcookie("c_password", $password, time()+(60*60*24));
-        setcookie("c_preferences", $preferences, time()+(60*60*24));
-    }else{
-        setcookie("c_username","");
-        setcookie("c_password","");
-        setcookie("c_preferences","");
-        setcookie("c_language", "");
-    }
 }
-// Lenguaje
-if(isset($_GET["language"])) {
-    setcookie("c_language", $_GET["language"], time()+(60*60*24));
-    $language = $_GET["language"];
-}else{
-    $language = (isset($_COOKIE["c_language"]))?$_COOKIE["c_language"]:"spanish";
-}
+
 // Todas las páginas (de la zona VIP) controlan esto
 if(!isset($_SESSION["s_username"]) && !isset($_SESSION["s_password"])) {
     header("Location: index.php");
+}
+
+// Lenguaje
+if(isset($_GET["language"])) {
+    $language = $_GET["language"];
+}else{
+    if(isset($_COOKIE["c_preferences"])) {
+        $language = $_COOKIE["c_language"];
+    }else{
+        $language = "spanish";
+    }
+}
+
+if(isset($_POST["preferences"])) {
+    if(isset($_COOKIE["c_preferences"])){
+        setcookie("c_language", $language, time()+(60*60*24));
+    }else{
+        $username = $_POST["username"];
+        $password = $_POST["password"];
+        $preferences = $_POST["preferences"];
+        setcookie("c_username", $username, time()+(60*60*24));
+        setcookie("c_password", $password, time()+(60*60*24));
+        setcookie("c_preferences", $preferences, time()+(60*60*24));
+        setcookie("c_language", $language, time()+(60*60*24));
+    }
+}else if(isset($_POST["username"])) {
+    setcookie("c_username","");
+    setcookie("c_password", "");
+    setcookie("c_preferences", "");
+    setcookie("c_language");
+} else{
+    (isset($_COOKIE["c_preferences"]))?setcookie("c_language", $language, time()+(60*60*24)):"";
 }
 ?>
 
